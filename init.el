@@ -101,8 +101,6 @@
           (lambda ()
             (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)))
 
-(linum-mode t)
-
 (use-package company)
 (global-company-mode t)
 
@@ -153,3 +151,4 @@
 
 (ido-mode 1)
 (setq ido-seperator "\n")
+

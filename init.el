@@ -152,3 +152,6 @@
 (ido-mode 1)
 (setq ido-seperator "\n")
 
+(global-set-key (kbd "C-c C-l") 'linum-mode)
+
+(set-face-foreground 'linum "#E9B000")

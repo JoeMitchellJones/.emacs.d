@@ -23,7 +23,8 @@
     ("e4859645a914c748b966a1fe53244ff9e043e00f21c5989c4a664d649838f6a3" default)))
  '(package-selected-packages
    (quote
-    (ace-jump-mode helm which-key general ivy evil peacock-theme))))
+    (evil-magit zoom magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
+ '(zoom-mode t nil (zoom)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -48,8 +49,37 @@
 (use-package evil)
 (evil-mode 1)
 
+(use-package which-key)
+(which-key-mode 1)
+
+(use-package helm)
+
+(use-package ace-jump-mode)
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+
+(use-package zoom)
+
+(use-package evil-magit)
+
 (use-package ivy)
 (ivy-mode 1)
+
+(use-package ace-window)
+
+(use-package magit)
+
+(use-package powerline)
+(use-package powerline-evil)
+(powerline-evil-center-color-theme)
+
+(defun find-user-init-file ()
+  "Edit config in another window"
+  (interactive)
+  (find-file-other-window user-init-file))
 
 (use-package general)
 ;; bind j and k in normal state globally
@@ -70,7 +100,12 @@
 (general-define-key
  :prefix my-leader1
  :keymaps 'normal
- "f" 'find-file)
+ "mg" 'magit-status
+ "mh" 'magit-dispatch-popup
+ "d" 'dired
+ "c" 'find-user-init-file
+ "f" 'find-file
+ "s" 'save-buffer)
 
 ;; bind a key in multiple states
 (general-define-key :keymaps 'org-mode-map
@@ -80,10 +115,18 @@
 (general-evil-setup)
 ;; all keywords arguments are still supported
 (general-nmap :prefix "SPC"
-  "p" 'helm-mini
+  "1" 'delete-other-windows
+  "0" 'delete-window
+  "/" 'split-window-right
+  "y" 'clipboard-kill-region
+  "p" 'clipboard-yank
+  "W" 'ace-window
+  "b" 'ivy-switch-buffer
+  "P" 'helm-mini
   "w" 'ace-jump-word-mode
   "c" 'ace-jump-char-mode
   "l" 'ace-jump-line-mode
+  "B" 'eval-buffer
   "SPC" 'execute-extended-command)
 
 ;; bind in motion state (inherited by the normal, visual, and operator states)
@@ -95,14 +138,7 @@
 (mmap "j" 'evil-next-visual-line
       "k" 'evil-previous-visual-line)
 
-(use-package which-key)
-(which-key-mode 1)
 
-(use-package helm)
 
-(use-package ace-jump-mode)
-(autoload
-  'ace-jump-mode
-  "ace-jump-mode"
-  "Emacs quick move minor mode"
-  t)
+ (set-frame-parameter (selected-frame) 'alpha '(98 . 50))
+ (add-to-list 'default-frame-alist '(alpha . (98 . 50)))

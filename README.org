@@ -17,3 +17,5 @@ The key packages for this config include
   - Magit
   - Ace jump/window
   - Ivy
+  - Which-key
+  - Helm

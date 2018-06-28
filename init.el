@@ -23,7 +23,7 @@
     ("e4859645a914c748b966a1fe53244ff9e043e00f21c5989c4a664d649838f6a3" default)))
  '(package-selected-packages
    (quote
-    (evil-magit zoom magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
+    (lorem-ipsum company evil-magit zoom magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
  '(zoom-mode t nil (zoom)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -31,6 +31,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq backup-directory-alist '(("." . "~/.saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
  ;; --------------------------------------------------------------------------------------
 
@@ -46,13 +53,23 @@
 (ido-mode 1)
 (setq ido-enable-flex-matching t)
 
-(use-package evil)
-(evil-mode 1)
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-C-d-scroll t)
+  (setq evil-want-C-u-scroll t)
+  :config
+  (evil-mode 1)
+  ;; snip...
+)
 
 (use-package which-key)
 (which-key-mode 1)
 
 (use-package helm)
+
+(use-package company)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (use-package ace-jump-mode)
 (autoload
@@ -67,6 +84,8 @@
 
 (use-package ivy)
 (ivy-mode 1)
+
+(use-package lorem-ipsum)
 
 (use-package ace-window)
 
@@ -126,6 +145,7 @@
   "w" 'ace-jump-word-mode
   "c" 'ace-jump-char-mode
   "l" 'ace-jump-line-mode
+  "L" 'lorem-ipsum-insert-paragraphs
   "B" 'eval-buffer
   "SPC" 'execute-extended-command)
 
@@ -140,5 +160,5 @@
 
 
 
- (set-frame-parameter (selected-frame) 'alpha '(98 . 50))
- (add-to-list 'default-frame-alist '(alpha . (98 . 50)))
+ (set-frame-parameter (selected-frame) 'alpha '(98 . 80))
+ (add-to-list 'default-frame-alist '(alpha . (98 . 80)))

@@ -1,3 +1,4 @@
+;; desu
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -23,8 +24,8 @@
     ("e4859645a914c748b966a1fe53244ff9e043e00f21c5989c4a664d649838f6a3" default)))
  '(package-selected-packages
    (quote
-    (lorem-ipsum company evil-magit zoom magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
- '(zoom-mode t nil (zoom)))
+    (golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -78,7 +79,9 @@
   "Emacs quick move minor mode"
   t)
 
-(use-package zoom)
+(use-package golden-ratio)
+(golden-ratio-mode 1)
+(setq golden-ratio-auto-scale t)
 
 (use-package evil-magit)
 
@@ -137,6 +140,7 @@
   "1" 'delete-other-windows
   "0" 'delete-window
   "/" 'split-window-right
+  "-" 'split-window-below
   "y" 'clipboard-kill-region
   "p" 'clipboard-yank
   "W" 'ace-window

@@ -1,0 +1,19 @@
+#+TITLE: .emacs.d config files
+
+* 1. General overview
+
+This is a pretty basic emacs config, running evil mode. Bindings are seperated into SPC for modifying inside a file and , for anything more global.
+
+* 2. Install
+
+  - Clone into ~/
+    
+* 3. Core Packages
+
+The key packages for this config include
+ 
+  - Evil
+  - Company
+  - Magit
+  - Ace jump/window
+  - Ivy

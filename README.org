@@ -2,7 +2,8 @@
 
 * 1. General overview
 
-This is a pretty basic emacs config, running evil mode. Bindings are seperated into SPC for modifying inside a file and , for anything more global.
+This is a pretty basic emacs config, running evil mode. Bindings are seperated into 'SPC' for modifying inside a file and ',' for anything more global.
+Note that evil bindings do not work in modes like dired, and not all emacs bindings have an evil counterpart. (Help is still C-h for example)
 
 * 2. Install
 

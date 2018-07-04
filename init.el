@@ -14,6 +14,8 @@
   (require 'use-package))
 (require 'bind-key)
 
+(setq use-package-always-ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,8 +26,7 @@
     ("e4859645a914c748b966a1fe53244ff9e043e00f21c5989c4a664d649838f6a3" default)))
  '(package-selected-packages
    (quote
-    (golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
- )
+    (powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -166,3 +167,6 @@
 
  (set-frame-parameter (selected-frame) 'alpha '(98 . 80))
  (add-to-list 'default-frame-alist '(alpha . (98 . 80)))
+
+(global-set-key (kbd "C-<wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "C-<wheel-down>") 'text-scale-decrease)

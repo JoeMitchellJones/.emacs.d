@@ -42,7 +42,7 @@
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
    (quote
-    (key-chord org-bullets monokai-theme powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
+    (exec-path-from-shell key-chord org-bullets monokai-theme powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme)))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(vc-annotate-background nil)
@@ -87,6 +87,7 @@
  ;; --------------------------------------------------------------------------------------
 
 (global-linum-mode 1)
+(global-visual-line-mode 1)
 
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
@@ -108,7 +109,7 @@
 )
 
 (use-package key-chord)
-(setq key-chord-two-keys-delay 0.5)
+(setq key-chord-two-keys-delay 0.1)
 (key-chord-define evil-insert-state-map "fd" 'evil-normal-state)
 (key-chord-mode 1)
 
@@ -151,6 +152,10 @@
 
 (use-package org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(use-package exec-path-from-shell)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (defun find-user-init-file ()
   "Edit config in another window"

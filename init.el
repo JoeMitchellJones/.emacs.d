@@ -243,3 +243,7 @@
 (global-set-key (kbd "C-<wheel-down>") 'text-scale-decrease)
 
 (add-to-list 'golden-ratio-extra-commands 'ace-window)
+
+(add-hook 'before-save-hook 'time-stamp)
+
+(add-hook 'org-mode-hook 'turn-on-flyspell)

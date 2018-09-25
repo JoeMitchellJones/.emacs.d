@@ -247,3 +247,7 @@
 (add-hook 'before-save-hook 'time-stamp)
 
 (add-hook 'org-mode-hook 'turn-on-flyspell)
+(if (eq system-type 'windows-nt)
+    (remove-hook 'org-mode-hook 'turn-on-flyspell)
+)
+

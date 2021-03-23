@@ -6,7 +6,7 @@ This is a pretty basic emacs config, running evil mode. Bindings are seperated i
 
 Note that evil bindings do not work in modes like dired, and not all emacs bindings have an evil counterpart. (Help is still C-h for example)
 
-When inside magit, "\" will toggle text mode, which will let you use evil bindings.
+When inside magit, "\\" will toggle text mode, which will let you use evil bindings.
 
 * 2. Install
 

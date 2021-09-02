@@ -2,7 +2,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
@@ -98,6 +98,7 @@
 (ido-mode 1)
 (setq ido-enable-flex-matching t)
 
+(setq evil-want-keybinding nil)
 (use-package evil
   :ensure t
   :init
@@ -132,7 +133,8 @@
 (golden-ratio-mode 1)
 (setq golden-ratio-auto-scale t)
 
-(use-package evil-magit)
+(use-package evil-collection
+  :init (evil-collection-init))
 
 (use-package ivy)
 (ivy-mode 1)

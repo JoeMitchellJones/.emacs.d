@@ -6,6 +6,7 @@
 /session.*
 /custom.el
 *.elc
+*.swp
 CVS
 .svn
 *~

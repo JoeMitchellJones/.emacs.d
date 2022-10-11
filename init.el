@@ -41,7 +41,7 @@
      ("#3C3D37" . 100)))
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
-   '(yaml-mode terraform-mode go-mode flycheck undo-tree evil-collection exec-path-from-shell key-chord org-bullets monokai-theme powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme))
+   '(evil-org yaml-mode terraform-mode go-mode flycheck undo-tree evil-collection exec-path-from-shell key-chord org-bullets monokai-theme powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(vc-annotate-background nil)
@@ -65,6 +65,7 @@
      (340 . "#2790C3")
      (360 . "#66D9EF")))
  '(vc-annotate-very-old-color nil)
+ '(warning-suppress-types '((auto-save)))
  '(weechat-color-list
    '(unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
 (custom-set-faces
@@ -159,7 +160,10 @@
   (exec-path-from-shell-initialize))
 
 (use-package go-mode)
-(add-hook 'go-mode-hook 'lsp-deferred)
+(defun custom-go-mode-hook ()
+  (add-hook 'before-save-hook 'gofmt-before-save))
+(add-hook 'go-mode-hook 'custom-go-mode-hook)
+;(add-hook 'go-mode-hook 'lsp-deferred)
 
 (use-package terraform-mode)
 
@@ -168,6 +172,14 @@
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (defun find-user-init-file ()
   "Edit config in another window"
@@ -179,6 +191,18 @@
     (interactive)
     (move-beginning-of-line 1)
     (insert "import pdb; pdb.set_trace();\n"))
+
+(defun add-go-err-return ()
+  "add go if err block and move line down"
+  (interactive)
+  (insert "if err != nil {\n")
+  (insert "return err\n")
+  (insert "}\n")
+  (evil-previous-line)
+  (evil-previous-line))
+
+(add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.tmpl\\'" . html-mode))
 
 (use-package general)
 ;; bind j and k in normal state globally
@@ -238,8 +262,10 @@
   "L" 'lorem-ipsum-insert-paragraphs
   "B" 'eval-buffer
   "d" 'add-py-debug
+  "ge" 'add-go-err-return
   "ol" 'org-store-link
   "oa" 'org-agenda
+  "oe" 'org-export-dispatch
   "ot" 'org-todo
   "o RET" 'org-insert-todo-heading
   "oo" 'org-open-at-point

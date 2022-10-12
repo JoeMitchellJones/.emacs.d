@@ -201,6 +201,12 @@
   (evil-previous-line)
   (evil-previous-line))
 
+(defun indent-buffer ()
+  "selects the whole buffer then auto-indents"
+  (interactive)
+  (mark-whole-buffer)
+  (indent-for-tab-command))
+
 (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.tmpl\\'" . html-mode))
 
@@ -273,6 +279,7 @@
   "oL" 'org-insert-link
   "oAT" 'org-todo-list
   "os" 'org-schedule
+  "TAB" 'indent-buffer
   "SPC" 'execute-extended-command)
 
 ;; bind in motion state (inherited by the normal, visual, and operator states)

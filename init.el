@@ -41,7 +41,7 @@
      ("#3C3D37" . 100)))
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
-   '(evil-org yaml-mode terraform-mode go-mode flycheck undo-tree evil-collection exec-path-from-shell key-chord org-bullets monokai-theme powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme))
+   '(eglot company-go evil-org yaml-mode terraform-mode go-mode flycheck undo-tree evil-collection exec-path-from-shell key-chord org-bullets monokai-theme powerline-evil powerline ace-window golden-ratio lorem-ipsum company evil-magit magit ace-jump-mode helm which-key general ivy evil peacock-theme))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(vc-annotate-background nil)
@@ -119,6 +119,7 @@
 
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
+(use-package eglot)
 
 (use-package ace-jump-mode)
 (autoload
@@ -160,10 +161,26 @@
   (exec-path-from-shell-initialize))
 
 (use-package go-mode)
-(defun custom-go-mode-hook ()
-  (add-hook 'before-save-hook 'gofmt-before-save))
-(add-hook 'go-mode-hook 'custom-go-mode-hook)
-;(add-hook 'go-mode-hook 'lsp-deferred)
+;; Go eglot stuff below
+(require 'project)
+(add-hook 'go-mode-hook 'eglot-ensure)
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+
+(defun project-find-go-module (dir)
+  (when-let ((root (locate-dominating-file dir "go.mod")))
+    (cons 'go-module root)))
+
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+
+(add-hook 'project-find-functions #'project-find-go-module)
+
+(setq-default eglot-workspace-configuration
+    '((:gopls .
+        ((staticcheck . t)
+         (matcher . "CaseSensitive")))))
 
 (use-package terraform-mode)
 
@@ -191,6 +208,17 @@
     (interactive)
     (move-beginning-of-line 1)
     (insert "import pdb; pdb.set_trace();\n"))
+
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+
+(defun open-term-horizontally ()
+  (interactive)
+  (split-and-follow-horizontally)
+  (ansi-term "/bin/zsh"))
 
 (defun add-go-err-return ()
   "add go if err block and move line down"
@@ -259,6 +287,7 @@
   "y" 'clipboard-kill-region
   "p" 'clipboard-yank
   "W" 'ace-window
+  "t" 'open-term-horizontally
   "b" 'ivy-switch-buffer
   "P" 'helm-mini
   "i" 'helm-imenu-in-all-buffers

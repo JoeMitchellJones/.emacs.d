@@ -6,6 +6,9 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
+(when (not package-archive-contents)
+    (package-refresh-contents))
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -84,7 +87,7 @@
 
  ;; --------------------------------------------------------------------------------------
 
-(global-linum-mode 1)
+;;(global-linum-mode 1)
 (global-visual-line-mode 1)
 
 (setq inhibit-startup-message t
@@ -342,3 +345,4 @@
 (define-key evil-normal-state-map "u" 'undo-tree-undo)
 (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
 
+(global-display-line-numbers-mode)
